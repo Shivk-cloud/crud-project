@@ -1,0 +1,58 @@
+{% extends "work/base.html" %}
+{% block title %} Home {% endblock title %}
+{% block main_content %} 
+<section class="container">
+    <div class="row justify-content-around text-center text-green mt-5">
+        <div class="col-sm-8">
+        <h3> Simple Python Project in Django</h>
+        </div>
+    </div>
+
+        
+    <div class="row justify-content-around">
+        <div class="col-sm-8">
+            <a href="{% url 'add-student' %}" class="btn btn-primary float-end">ADD</a>
+        </div>   
+    </div>     
+
+    <div class="row justify-content-around text-center text-green mt-2">
+        <div class="col-sm-8">
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col">ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Roll</th>
+                      <th scope="col">City</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for stud in studata %}
+                    <tr>
+                      <th scope="row">{{forloop.counter}}</th>
+                      <td>{{stud.name}}</td>
+                      <td>{{stud.roll}}</td>
+                      <td>{{stud.city}}</td>
+                      <td class="align-inline">
+                        <form action="{% url 'delete-student' %}" method='POST' class="d-inline">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" value="{{stud.id}}">
+                            <input type="submit" value="Delete" class="btn btn-danger btn-sm">
+                        </form>
+                        <a href="{% url 'edit-student' stud.id %}" class="btn btn-sm btn-info ms-2">Edit</a>
+                    </td>
+                    </tr>
+                    {% endfor %}                  
+                  </tbody>
+              </table>
+            </div>
+        </div>    
+    
+</section>  
+    
+    
+
+{% endblock main_content %}
+
+
